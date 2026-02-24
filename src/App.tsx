@@ -1,59 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./index.css";
+import Navbar from "./components/Navbar";
 
-const tempMovieData = [
-  {
-    imdbID: "tt1375666",
-    Title: "Inception",
-    Year: "2010",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-  },
-  {
-    imdbID: "tt0133093",
-    Title: "The Matrix",
-    Year: "1999",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
-  },
-  {
-    imdbID: "tt6751668",
-    Title: "Parasite",
-    Year: "2019",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
-  },
-];
-
-const tempWatchedData = [
-  {
-    imdbID: "tt1375666",
-    Title: "Inception",
-    Year: "2010",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
-    runtime: 148,
-    imdbRating: 8.8,
-    userRating: 10,
-  },
-  {
-    imdbID: "tt0088763",
-    Title: "Back to the Future",
-    Year: "1985",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
-    runtime: 116,
-    imdbRating: 8.5,
-    userRating: 9,
-  },
-];
+import { tempWatchedData } from "./consts/temp-watched-data";
+import Box from "./components/Box";
+import ToggleButton from "./components/ToggleButton";
+import SearchInput from "./components/SearchInput";
+import SearchResults from "./components/SearchResults";
+import { searchMovies } from "./utils/searchMovies";
+import type { Movie } from "./types/movie";
+import MovieCard from "./components/MovieCard";
 
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 export default function App() {
-  const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState(tempMovieData);
+  const [query, setQuery] = useState<string>("");
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [watched, setWatched] = useState(tempWatchedData);
   const [isOpen1, setIsOpen1] = useState(true);
   const [isOpen2, setIsOpen2] = useState(true);
@@ -62,65 +25,50 @@ export default function App() {
   const avgUserRating = average(watched.map((movie) => movie.userRating));
   const avgRuntime = average(watched.map((movie) => movie.runtime));
 
+  useEffect(() => {
+    if (!query) return;
+
+    const timeout = setTimeout(async () => {
+      try {
+        const res = await searchMovies(query);
+        setMovies(res.description ?? []);
+      } catch (error) {
+        console.log("Failed to fetch movies", error);
+      }
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, [query]);
+
   return (
     <>
-      <nav className="nav-bar">
-        <div className="logo">
-          <span role="img">
-            <img
-              src="/icon/stream-vault-icon.png"
-              alt="Stream Vault icon"
-              width={50}
-              height={50}
-            />
-          </span>
-          <h1>Stream Vault</h1>
-        </div>
-        <input
-          className="search"
-          type="text"
-          placeholder="Search movies..."
+      <Navbar>
+        <SearchInput
+          placeholder="Search for movies..."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onSearch={(e) => setQuery(e.target.value)}
         />
-        <p className="num-results">
-          Found <strong>{movies.length}</strong> results
-        </p>
-      </nav>
+        <SearchResults results={movies.length} />
+      </Navbar>
 
       <main className="main">
-        <div className="box">
-          <button
-            className="btn-toggle"
-            onClick={() => setIsOpen1((open) => !open)}
-          >
-            {isOpen1 ? "–" : "+"}
-          </button>
+        <Box>
+          <ToggleButton isOpen={isOpen1} setIsOpen={setIsOpen1} />
           {isOpen1 && (
             <ul className="list">
-              {movies?.map((movie) => (
-                <li key={movie.imdbID}>
-                  <img src={movie.Poster} alt={`${movie.Title} poster`} />
-                  <h3>{movie.Title}</h3>
-                  <div>
-                    <p>
-                      <span>🗓</span>
-                      <span>{movie.Year}</span>
-                    </p>
-                  </div>
-                </li>
+              {movies.map((movie) => (
+                <MovieCard
+                  poster={movie["#IMG_POSTER"]}
+                  title={movie["#TITLE"]}
+                  year={movie["#YEAR"]}
+                  key={movie["#IMDB_ID"]}
+                />
               ))}
             </ul>
           )}
-        </div>
+        </Box>
 
-        <div className="box">
-          <button
-            className="btn-toggle"
-            onClick={() => setIsOpen2((open) => !open)}
-          >
-            {isOpen2 ? "–" : "+"}
-          </button>
+        <Box>
+          <ToggleButton isOpen={isOpen2} setIsOpen={setIsOpen2} />
           {isOpen2 && (
             <>
               <div className="summary">
@@ -169,7 +117,7 @@ export default function App() {
               </ul>
             </>
           )}
-        </div>
+        </Box>
       </main>
     </>
   );
