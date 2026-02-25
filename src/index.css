@@ -342,6 +342,16 @@ body {
   justify-content: center;
 }
 
+/* Hide scrollbar but keep scrolling */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 /*
 SPACING SYSTEM (px)
 2 / 4 / 8 / 12 / 16 / 24 / 32 / 40 / 48 / 64 / 80 / 96 / 128

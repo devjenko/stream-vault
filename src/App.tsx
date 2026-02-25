@@ -10,6 +10,10 @@ import SearchResults from "./components/SearchResults";
 import { searchMovies } from "./utils/searchMovies";
 import type { Movie } from "./types/movie";
 import MovieCard from "./components/MovieCard";
+import ImdbRating from "./components/ImdbRating";
+import UserRating from "./components/UserRating";
+import Runtime from "./components/Runtime";
+import MovieStats from "./components/MovieStats";
 
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
@@ -54,7 +58,7 @@ export default function App() {
         <Box>
           <ToggleButton isOpen={isOpen1} setIsOpen={setIsOpen1} />
           {isOpen1 && (
-            <ul className="list">
+            <ul className="list no-scrollbar">
               {movies.map((movie) => (
                 <MovieCard
                   poster={movie["#IMG_POSTER"]}
@@ -78,18 +82,11 @@ export default function App() {
                     <span>#️⃣</span>
                     <span>{watched.length} movies</span>
                   </p>
-                  <p>
-                    <span>⭐️</span>
-                    <span>{avgImdbRating}</span>
-                  </p>
-                  <p>
-                    <span>🌟</span>
-                    <span>{avgUserRating}</span>
-                  </p>
-                  <p>
-                    <span>⏳</span>
-                    <span>{avgRuntime} min</span>
-                  </p>
+                  <MovieStats
+                    imdbRating={avgImdbRating}
+                    userRating={avgUserRating}
+                    runtime={avgRuntime}
+                  />
                 </div>
               </div>
 
@@ -99,18 +96,11 @@ export default function App() {
                     <img src={movie.Poster} alt={`${movie.Title} poster`} />
                     <h3>{movie.Title}</h3>
                     <div>
-                      <p>
-                        <span>⭐️</span>
-                        <span>{movie.imdbRating}</span>
-                      </p>
-                      <p>
-                        <span>🌟</span>
-                        <span>{movie.userRating}</span>
-                      </p>
-                      <p>
-                        <span>⏳</span>
-                        <span>{movie.runtime} min</span>
-                      </p>
+                      <MovieStats
+                        imdbRating={movie.imdbRating}
+                        userRating={movie.userRating}
+                        runtime={movie.runtime}
+                      />
                     </div>
                   </li>
                 ))}
