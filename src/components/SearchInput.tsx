@@ -1,17 +1,36 @@
+import { useState, useEffect } from "react";
+import { searchMovies } from "../utils/searchMovies";
+import type { movie } from "../types/movie";
+
 interface SearchInputProps {
-  value: string;
-  onSearch: React.ChangeEventHandler<HTMLInputElement, HTMLInputElement>;
   placeholder: string;
+  setMovies: React.Dispatch<React.SetStateAction<movie[]>>;
 }
 
-const SearchInput = ({ value, onSearch, placeholder }: SearchInputProps) => {
+const SearchInput = ({ placeholder, setMovies }: SearchInputProps) => {
+  const [query, setQuery] = useState<string>("");
+
+  useEffect(() => {
+    if (!query) return;
+
+    const timeout = setTimeout(async () => {
+      try {
+        const res = await searchMovies(query);
+        setMovies(res.description ?? []);
+      } catch (error) {
+        console.log("Failed to fetch movies", error);
+      }
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, [query]);
+
   return (
     <input
       className="search"
       type="text"
       placeholder={placeholder}
-      value={value}
-      onChange={onSearch}
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
     />
   );
 };

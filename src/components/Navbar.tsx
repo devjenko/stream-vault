@@ -1,8 +1,13 @@
+import SearchInput from "./SearchInput";
+import SearchResults from "./SearchResults";
+import type { movie } from "../types/movie";
+
 interface NavbarProps {
-  children: React.ReactNode;
+  movies: movie[];
+  setMovies: React.Dispatch<React.SetStateAction<movie[]>>;
 }
 
-const Navbar = ({ children }: NavbarProps) => {
+const Navbar = ({ movies, setMovies }: NavbarProps) => {
   return (
     <nav className="nav-bar">
       <div className="logo">
@@ -16,7 +21,8 @@ const Navbar = ({ children }: NavbarProps) => {
         </span>
         <h1>Stream Vault</h1>
       </div>
-      {children}
+      <SearchInput placeholder="Search for movies..." setMovies={setMovies} />
+      <SearchResults results={movies.length} />
     </nav>
   );
 };
