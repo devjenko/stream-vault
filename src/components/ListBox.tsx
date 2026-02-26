@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useState, type SetStateAction } from "react";
 import ToggleButton from "./ToggleButton";
 import MovieCard from "./MovieCard";
 import type { movie } from "../types/movie";
 
-const Box = ({ movies }: { movies: movie[] }) => {
+
+
+interface ListBoxProps {
+  movies: movie[];
+  setOpenWatchedBox: React.Dispatch<SetStateAction<boolean>>;
+  setSelectedMovieCard:React.Dispatch<SetStateAction<string>>;
+}
+
+const ListBox = ({ movies, setOpenWatchedBox, setSelectedMovieCard }:ListBoxProps) => {
   const [isOpen1, setIsOpen1] = useState(true);
   return (
     <div className="box no-scrollbar">
@@ -13,10 +21,11 @@ const Box = ({ movies }: { movies: movie[] }) => {
         <ul className="list no-scrollbar">
           {movies.map((movie) => (
             <MovieCard
-              poster={movie["#IMG_POSTER"]}
-              title={movie["#TITLE"]}
-              year={movie["#YEAR"]}
-              key={movie["#IMDB_ID"]}
+            setOpenWatchedBox={setOpenWatchedBox}
+            setSelectedMovieCard={setSelectedMovieCard}
+              movie={movie}
+              
+              
             />
           ))}
         </ul>
@@ -25,4 +34,4 @@ const Box = ({ movies }: { movies: movie[] }) => {
   );
 };
 
-export default Box;
+export default ListBox;

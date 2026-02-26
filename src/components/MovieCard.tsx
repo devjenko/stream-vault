@@ -1,18 +1,28 @@
-interface MovieCardProps {
-  title: string;
-  poster: string;
-  year: number;
+import type { SetStateAction } from "react";
+import type { movie } from "../types/movie";
+
+
+interface MovieCardProps  {
+  setOpenWatchedBox: React.Dispatch<SetStateAction<boolean>>;
+  setSelectedMovieCard:React.Dispatch<SetStateAction<movie[]>>;
+  movie:movie[];
 }
 
-const MovieCard = ({ title, poster, year }: MovieCardProps) => {
+const MovieCard = ({  setOpenWatchedBox, setSelectedMovieCard, movie }: MovieCardProps) => {
+
+  const handleClick = () => {
+    setOpenWatchedBox(true);
+    setSelectedMovieCard(movie);
+  }
+
   return (
-    <li>
-      <img src={poster} alt={`${title} poster`} width={100} height={100} />
-      <h3>{title}</h3>
+    <li key={movie["#TITLE"]} className="cursor-pointer" onClick={handleClick}>
+      <img src={movie["#IMG_POSTER"]} alt={`${movie["#TITLE"]} poster`} width={100} height={100} />
+      <h3>{movie["#TITLE"]}</h3>
       <div>
         <p>
           <span>🗓</span>
-          <span>{year}</span>
+          <span>{movie["#YEAR"]}</span>
         </p>
       </div>
     </li>
