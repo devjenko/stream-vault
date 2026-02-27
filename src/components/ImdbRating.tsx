@@ -4,7 +4,7 @@ const ImdbRating = ({ rating }: { rating: number }) => {
       <span>⭐️</span>
       <span>{rating}</span>
     </p>
-  );
-};
+  )
+}
 
-export default ImdbRating;
+export default ImdbRating

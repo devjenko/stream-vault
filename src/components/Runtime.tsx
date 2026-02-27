@@ -4,7 +4,7 @@ const Runtime = ({ time }: { time: number }) => {
       <span>⏳</span>
       <span>{time} min</span>
     </p>
-  );
-};
+  )
+}
 
-export default Runtime;
+export default Runtime

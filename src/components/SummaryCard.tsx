@@ -2,8 +2,8 @@ const SummaryCard = ({
   watchedMovieLength,
   children,
 }: {
-  watchedMovieLength: number;
-  children: React.ReactNode;
+  watchedMovieLength: number
+  children: React.ReactNode
 }) => {
   return (
     <div className="summary">
@@ -16,7 +16,7 @@ const SummaryCard = ({
         {children}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SummaryCard;
+export default SummaryCard

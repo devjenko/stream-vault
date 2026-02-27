@@ -4,7 +4,7 @@ const UserRating = ({ rating }: { rating: number }) => {
       <span>🌟</span>
       <span>{rating}</span>
     </p>
-  );
-};
+  )
+}
 
-export default UserRating;
+export default UserRating

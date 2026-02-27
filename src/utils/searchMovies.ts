@@ -1,9 +1,11 @@
 export async function searchMovies(movieName: string) {
   const res = await fetch(
-    `https://imdb.iamidiotareyoutoo.com/search?q=${movieName}`,
-  );
+    `https://imdb.iamidiotareyoutoo.com/search?q=${movieName}`
+  )
 
-  const movieData = await res.json();
+  const movieData = await res.json()
 
-  return movieData;
+  console.log(movieData)
+
+  return movieData
 }

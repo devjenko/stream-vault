@@ -1,5 +1,5 @@
 interface SearchResultsProps {
-  results: number;
+  results: number
 }
 
 const SearchResults = ({ results }: SearchResultsProps) => {
@@ -7,7 +7,7 @@ const SearchResults = ({ results }: SearchResultsProps) => {
     <p className="num-results">
       Found <strong>{results}</strong> results
     </p>
-  );
-};
+  )
+}
 
-export default SearchResults;
+export default SearchResults

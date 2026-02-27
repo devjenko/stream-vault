@@ -1,10 +1,10 @@
-import SearchInput from "./SearchInput";
-import SearchResults from "./SearchResults";
-import type { movie } from "../types/movie";
+import SearchInput from './SearchInput'
+import SearchResults from './SearchResults'
+import type { movie } from '../types/movie'
 
 interface NavbarProps {
-  movies: movie[];
-  setMovies: React.Dispatch<React.SetStateAction<movie[]>>;
+  movies: movie[]
+  setMovies: React.Dispatch<React.SetStateAction<movie[]>>
 }
 
 const Navbar = ({ movies, setMovies }: NavbarProps) => {
@@ -24,7 +24,7 @@ const Navbar = ({ movies, setMovies }: NavbarProps) => {
       <SearchInput placeholder="Search for movies..." setMovies={setMovies} />
       <SearchResults results={movies.length} />
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

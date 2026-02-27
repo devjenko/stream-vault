@@ -1,33 +1,47 @@
-import { useState } from "react";
-import { tempWatchedData } from "../consts/temp-watched-data";
-import ToggleButton from "./ToggleButton";
-import SummaryCard from "./SummaryCard";
-import MovieStats from "./MovieStats";
-import MovieCardInfo from "./MovieCardInfo";
-import type { movie } from "../types/movie";
+import { useState } from 'react'
+import { tempWatchedData } from '../consts/temp-watched-data'
+import ToggleButton from './ToggleButton'
+import SummaryCard from './SummaryCard'
+import MovieStats from './MovieStats'
+import MovieCardInfo from './MovieCardInfo'
+import type { movie } from '../types/movie'
+import Rating from './Rating'
 
-const WatchedBox = ({openWatchedBox, selectedMovieCard, movies}:{openWatchedBox:boolean, selectedMovieCard:movie, movies:movie[]}) => {
-  const [isOpen2, setIsOpen2] = useState(true);
-  const [watched, setWatched] = useState(tempWatchedData);
+const WatchedBox = ({
+  openWatchedBox,
+  selectedMovieCard,
+  movies,
+}: {
+  openWatchedBox: boolean
+  selectedMovieCard: movie
+  movies: movie[]
+}) => {
+  const [isOpen2, setIsOpen2] = useState(true)
+  const [watched, setWatched] = useState(tempWatchedData)
 
   const average = (arr: number[]) =>
-    arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
+    arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0)
 
-  const avgImdbRating = average(watched.map((movies) => movies.imdbRating));
-  const avgUserRating = average(watched.map((movies) => movies.userRating));
-  const avgRuntime = average(watched.map((movies) => movies.runtime));
+  const avgImdbRating = average(watched.map((movies) => movies.imdbRating))
+  const avgUserRating = average(watched.map((movies) => movies.userRating))
+  const avgRuntime = average(watched.map((movies) => movies.runtime))
 
   return (
-    <div className="box no-scrollbar">
-      {" "}
+    <div  className="box no-scrollbar">
+      {' '}
       <ToggleButton isOpen={isOpen2} setIsOpen={setIsOpen2} />
       {isOpen2 && (
         <>
           {openWatchedBox ? (
-            <MovieCardInfo
-              movies={movies}
-              selectedMovieCard={selectedMovieCard}
-            />
+            <>
+              <MovieCardInfo
+                movies={movies}
+                selectedMovieCard={selectedMovieCard}
+              />
+              <div className="p-20! h-full">
+                <Rating />
+              </div>
+            </>
           ) : (
             <>
               <SummaryCard watchedMovieLength={watched.length}>
@@ -40,10 +54,7 @@ const WatchedBox = ({openWatchedBox, selectedMovieCard, movies}:{openWatchedBox:
               <ul className="list no-scrollbar">
                 {watched.map((movie) => (
                   <li key={movie.imdbID}>
-                    <img
-                      src={movie.Poster}
-                      alt={`${movie.Title} poster`}
-                    />
+                    <img src={movie.Poster} alt={`${movie.Title} poster`} />
                     <h3>{movie.Title}</h3>
                     <div>
                       <MovieStats
@@ -60,7 +71,7 @@ const WatchedBox = ({openWatchedBox, selectedMovieCard, movies}:{openWatchedBox:
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default WatchedBox;
+export default WatchedBox
