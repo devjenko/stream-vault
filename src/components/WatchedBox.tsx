@@ -23,33 +23,40 @@ const WatchedBox = ({openWatchedBox, selectedMovieCard, movies}:{openWatchedBox:
       <ToggleButton isOpen={isOpen2} setIsOpen={setIsOpen2} />
       {isOpen2 && (
         <>
-    
-          {openWatchedBox ?  
-         <MovieCardInfo movies={movies} selectedMovieCard={selectedMovieCard} />
-         :<>
-               <SummaryCard watchedMovieLength={watched.length}>
-            <MovieStats
-              imdbRating={avgImdbRating}
-              userRating={avgUserRating}
-              runtime={avgRuntime}
+          {openWatchedBox ? (
+            <MovieCardInfo
+              movies={movies}
+              selectedMovieCard={selectedMovieCard}
             />
-          </SummaryCard>
-         <ul className="list no-scrollbar">
-         {watched.map((movie) => (
-           <li key={movie.imdbID}>
-             <img src={movie.Poster} alt={`${movie.Title} poster`} />
-             <h3>{movie.Title}</h3>
-             <div>
-               <MovieStats
-                 imdbRating={movie.imdbRating}
-                 userRating={movie.userRating}
-                 runtime={movie.runtime}
-               />
-             </div>
-           </li>
-         ))}
-       </ul>
-}
+          ) : (
+            <>
+              <SummaryCard watchedMovieLength={watched.length}>
+                <MovieStats
+                  imdbRating={avgImdbRating}
+                  userRating={avgUserRating}
+                  runtime={avgRuntime}
+                />
+              </SummaryCard>
+              <ul className="list no-scrollbar">
+                {watched.map((movie) => (
+                  <li key={movie.imdbID}>
+                    <img
+                      src={movie.Poster}
+                      alt={`${movie.Title} poster`}
+                    />
+                    <h3>{movie.Title}</h3>
+                    <div>
+                      <MovieStats
+                        imdbRating={movie.imdbRating}
+                        userRating={movie.userRating}
+                        runtime={movie.runtime}
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </>
       )}
     </div>
