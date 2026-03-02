@@ -12,12 +12,15 @@ const Navbar = ({ movies, setMovies }: NavbarProps) => {
     <nav className="nav-bar">
       <div className="logo">
         <span role="img">
-          <img
-            src="/icon/stream-vault-icon.png"
-            alt="Stream Vault icon"
-            width={50}
-            height={50}
-          />
+          <a href="/">
+            {' '}
+            <img
+              src="/icon/stream-vault-icon.png"
+              alt="Stream Vault icon"
+              width={50}
+              height={50}
+            />
+          </a>
         </span>
         <h1>Stream Vault</h1>
       </div>

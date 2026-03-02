@@ -1,11 +1,12 @@
-import { useState } from 'react'
-import { tempWatchedData } from '../consts/temp-watched-data'
+import { useEffect, useState } from 'react'
+
 import ToggleButton from './ToggleButton'
 import SummaryCard from './SummaryCard'
 import MovieStats from './MovieStats'
 import MovieCardInfo from './MovieCardInfo'
 import type { movie } from '../types/movie'
 import Rating from './Rating'
+import AddToListButton from './AddToListButton'
 
 const WatchedBox = ({
   openWatchedBox,
@@ -17,17 +18,43 @@ const WatchedBox = ({
   movies: movie[]
 }) => {
   const [isOpen2, setIsOpen2] = useState(true)
-  const [watched, setWatched] = useState(tempWatchedData)
+  const [watched, setWatched] = useState<movie[]>(() => {
+    const saved = localStorage.getItem('watched')
+    return saved ? JSON.parse(saved) : []
+  })
+  const [rating, setRating] = useState(0)
+  const [hover, setHover] = useState(0)
+
+  // Set watched data to persist in local storage
+  useEffect(() => {
+    localStorage.setItem('watched', JSON.stringify(watched))
+  }, [watched])
+
+  const clearRating = () => {
+    setHover(0)
+    setRating(0)
+  }
 
   const average = (arr: number[]) =>
     arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0)
 
-  const avgImdbRating = average(watched.map((movies) => movies.imdbRating))
-  const avgUserRating = average(watched.map((movies) => movies.userRating))
-  const avgRuntime = average(watched.map((movies) => movies.runtime))
+  const avgRank = Math.floor(average(watched.map((movies) => movies['#RANK'])))
+  const avgYear = Math.floor(average(watched.map((movies) => movies['#YEAR'])))
+
+  const handleAddToList = () => {
+    const newWatchedMovie = { ...selectedMovieCard, rating: rating }
+
+    setWatched((prev) => [...prev, newWatchedMovie])
+
+    alert(
+      `Successfully added: ${selectedMovieCard['#TITLE']} with a rating of ${rating}`
+    )
+
+    console.log(watched)
+  }
 
   return (
-    <div  className="box no-scrollbar">
+    <div className="box no-scrollbar" onMouseLeave={clearRating}>
       {' '}
       <ToggleButton isOpen={isOpen2} setIsOpen={setIsOpen2} />
       {isOpen2 && (
@@ -39,28 +66,35 @@ const WatchedBox = ({
                 selectedMovieCard={selectedMovieCard}
               />
               <div className="p-20! h-full">
-                <Rating />
+                <Rating
+                  rating={rating}
+                  setRating={setRating}
+                  hover={hover}
+                  setHover={setHover}
+                >
+                  {rating ? (
+                    <AddToListButton onClick={handleAddToList} />
+                  ) : null}
+                </Rating>
               </div>
             </>
           ) : (
             <>
               <SummaryCard watchedMovieLength={watched.length}>
-                <MovieStats
-                  imdbRating={avgImdbRating}
-                  userRating={avgUserRating}
-                  runtime={avgRuntime}
-                />
+                <MovieStats imdbRating={avgRank} userRating={avgYear} />
               </SummaryCard>
               <ul className="list no-scrollbar">
                 {watched.map((movie) => (
-                  <li key={movie.imdbID}>
-                    <img src={movie.Poster} alt={`${movie.Title} poster`} />
-                    <h3>{movie.Title}</h3>
+                  <li key={movie['#TITLE']}>
+                    <img
+                      src={movie['#IMG_POSTER']}
+                      alt={`${movie['#TITLE']} poster`}
+                    />
+                    <h3>{movie['#TITLE']}</h3>
                     <div>
                       <MovieStats
-                        imdbRating={movie.imdbRating}
-                        userRating={movie.userRating}
-                        runtime={movie.runtime}
+                        imdbRating={movie['#RANK']}
+                        userRating={movie['#YEAR']}
                       />
                     </div>
                   </li>

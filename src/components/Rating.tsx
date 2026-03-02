@@ -1,19 +1,24 @@
-import { useState } from 'react'
-import AddToListButton from './AddToListButton'
+import { type SetStateAction } from 'react'
 
-const Rating = () => {
-  const [rating, setRating] = useState(0)
-  const [hover, setHover] = useState(0)
+interface RatingProps {
+  hover: number
+  setHover: React.Dispatch<SetStateAction<number>>
+  rating: number
+  setRating: React.Dispatch<SetStateAction<number>>
+  children: React.ReactNode
+}
 
+const Rating = ({
+  hover,
+  rating,
+  setHover,
+  setRating,
+  children,
+}: RatingProps) => {
   const amountOfStars = Array.from({ length: 10 })
 
-  const clearRating = () => {
-    setHover(0)
-    setRating(0)
-  }
-
   return (
-    <div onMouseLeave={clearRating} className="p-10! bg-[#343a40] rounded-lg ">
+    <div className="p-10! bg-[#343a40] rounded-lg ">
       {amountOfStars.map((_, index) => {
         const starValue = index + 1
 
@@ -21,6 +26,7 @@ const Rating = () => {
           <span
             key={index}
             onMouseEnter={() => setHover(starValue)}
+            onMouseLeave={() => setHover(0)}
             onClick={() => setRating(starValue)}
             className={`text-5xl cursor-pointer ${starValue <= (hover || rating) ? 'text-yellow-500' : 'text-white'}`}
           >
@@ -29,7 +35,7 @@ const Rating = () => {
         )
       })}
 
-      {rating ? <AddToListButton /> : null}
+      {children}
     </div>
   )
 }

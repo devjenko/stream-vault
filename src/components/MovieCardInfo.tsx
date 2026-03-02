@@ -1,6 +1,11 @@
 import type { movie } from '../types/movie'
 
-const MovieCardInfo = ({ selectedMovieCard }: { selectedMovieCard: movie }) => {
+const MovieCardInfo = ({
+  selectedMovieCard,
+}: {
+  selectedMovieCard: movie
+  movies: movie[]
+}) => {
   return (
     <div className="flex">
       <img
