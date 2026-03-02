@@ -49,8 +49,10 @@ const WatchedBox = ({
     alert(
       `Successfully added: ${selectedMovieCard['#TITLE']} with a rating of ${rating}`
     )
+  }
 
-    console.log(watched)
+  const handleRemoveMovie = (title: string) => {
+    setWatched((prev) => prev.filter((m) => m['#TITLE'] !== title))
   }
 
   return (
@@ -96,6 +98,12 @@ const WatchedBox = ({
                         imdbRating={movie['#RANK']}
                         userRating={movie['#YEAR']}
                       />
+                    </div>
+                    <div
+                      onClick={() => handleRemoveMovie(movie['#TITLE'])}
+                      className="text-red-500 absolute right-20 cursor-pointer"
+                    >
+                      x
                     </div>
                   </li>
                 ))}

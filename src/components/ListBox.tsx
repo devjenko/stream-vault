@@ -6,7 +6,7 @@ import type { movie } from '../types/movie'
 interface ListBoxProps {
   movies: movie[]
   setOpenWatchedBox: React.Dispatch<SetStateAction<boolean>>
-  setSelectedMovieCard: React.Dispatch<SetStateAction<string>>
+  setSelectedMovieCard: React.Dispatch<SetStateAction<movie[]>>
 }
 
 const ListBox = ({
@@ -26,6 +26,7 @@ const ListBox = ({
               setOpenWatchedBox={setOpenWatchedBox}
               setSelectedMovieCard={setSelectedMovieCard}
               movie={movie}
+              key={movie['#IMDB_ID']}
             />
           ))}
         </ul>
