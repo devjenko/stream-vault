@@ -4,21 +4,19 @@ import ToggleButton from './ToggleButton'
 import SummaryCard from './SummaryCard'
 import MovieStats from './MovieStats'
 import MovieCardInfo from './MovieCardInfo'
-import type { movie } from '../types/movie'
+import type { Movie, SelectedMovie } from '../types/movie'
 import Rating from './Rating'
 import AddToListButton from './AddToListButton'
 
 const WatchedBox = ({
   openWatchedBox,
   selectedMovieCard,
-  movies,
 }: {
   openWatchedBox: boolean
-  selectedMovieCard: movie
-  movies: movie[]
+  selectedMovieCard: SelectedMovie
 }) => {
   const [isOpen2, setIsOpen2] = useState(true)
-  const [watched, setWatched] = useState<movie[]>(() => {
+  const [watched, setWatched] = useState<Movie[]>(() => {
     const saved = localStorage.getItem('watched')
     return saved ? JSON.parse(saved) : []
   })
@@ -35,13 +33,16 @@ const WatchedBox = ({
     setRating(0)
   }
 
-  const average = (arr: number[]) =>
-    arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0)
+  const average = (arr: number[]) => {
+    const len = arr.length
+    return arr.reduce((acc, cur) => acc + cur / len, 0)
+  }
 
   const avgRank = Math.floor(average(watched.map((movies) => movies['#RANK'])))
   const avgYear = Math.floor(average(watched.map((movies) => movies['#YEAR'])))
 
   const handleAddToList = () => {
+    if (!selectedMovieCard) return
     const newWatchedMovie = { ...selectedMovieCard, rating: rating }
 
     setWatched((prev) => [...prev, newWatchedMovie])
@@ -61,10 +62,9 @@ const WatchedBox = ({
       <ToggleButton isOpen={isOpen2} setIsOpen={setIsOpen2} />
       {isOpen2 && (
         <>
-          {openWatchedBox ? (
+          {openWatchedBox && selectedMovieCard ? (
             <>
               <MovieCardInfo
-                movies={movies}
                 selectedMovieCard={selectedMovieCard}
               />
               <div className="p-20! h-full">

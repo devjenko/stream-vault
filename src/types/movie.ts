@@ -1,4 +1,4 @@
-export type movie = {
+export type Movie = {
   '#TITLE': string
   '#YEAR': number
   '#IMDB_ID': string
@@ -11,3 +11,7 @@ export type movie = {
   photo_width: number
   photo_height: number
 }
+
+export type movie = Movie
+
+export type SelectedMovie = Movie | null

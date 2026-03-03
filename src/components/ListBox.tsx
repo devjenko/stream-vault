@@ -1,12 +1,13 @@
-import { useState, type SetStateAction } from 'react'
+import { useState } from 'react'
 import ToggleButton from './ToggleButton'
 import MovieCard from './MovieCard'
-import type { movie } from '../types/movie'
+import type { Movie, SelectedMovie } from '../types/movie'
+import type { StateSetter } from '../types/state'
 
 interface ListBoxProps {
-  movies: movie[]
-  setOpenWatchedBox: React.Dispatch<SetStateAction<boolean>>
-  setSelectedMovieCard: React.Dispatch<SetStateAction<movie[]>>
+  movies: Movie[]
+  setOpenWatchedBox: StateSetter<boolean>
+  setSelectedMovieCard: StateSetter<SelectedMovie>
 }
 
 const ListBox = ({

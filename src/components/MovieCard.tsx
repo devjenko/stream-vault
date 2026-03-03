@@ -1,10 +1,10 @@
-import type { SetStateAction } from 'react'
-import type { movie } from '../types/movie'
+import type { Movie, SelectedMovie } from '../types/movie'
+import type { StateSetter } from '../types/state'
 
 interface MovieCardProps {
-  setOpenWatchedBox: React.Dispatch<SetStateAction<boolean>>
-  setSelectedMovieCard: React.Dispatch<SetStateAction<movie[]>>
-  movie: movie[]
+  setOpenWatchedBox: StateSetter<boolean>
+  setSelectedMovieCard: StateSetter<SelectedMovie>
+  movie: Movie
 }
 
 const MovieCard = ({

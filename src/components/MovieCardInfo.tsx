@@ -1,10 +1,9 @@
-import type { movie } from '../types/movie'
+import type { Movie } from '../types/movie'
 
 const MovieCardInfo = ({
   selectedMovieCard,
 }: {
-  selectedMovieCard: movie
-  movies: movie[]
+  selectedMovieCard: Movie
 }) => {
   return (
     <div className="flex">

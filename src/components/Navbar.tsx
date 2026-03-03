@@ -1,10 +1,11 @@
 import SearchInput from './SearchInput'
 import SearchResults from './SearchResults'
-import type { movie } from '../types/movie'
+import type { Movie } from '../types/movie'
+import type { StateSetter } from '../types/state'
 
 interface NavbarProps {
-  movies: movie[]
-  setMovies: React.Dispatch<React.SetStateAction<movie[]>>
+  movies: Movie[]
+  setMovies: StateSetter<Movie[]>
 }
 
 const Navbar = ({ movies, setMovies }: NavbarProps) => {

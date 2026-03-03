@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { searchMovies } from '../utils/searchMovies'
-import type { movie } from '../types/movie'
+import type { Movie } from '../types/movie'
+import type { StateSetter } from '../types/state'
 
 interface SearchInputProps {
   placeholder: string
-  setMovies: React.Dispatch<React.SetStateAction<movie[]>>
+  setMovies: StateSetter<Movie[]>
 }
 
 const SearchInput = ({ placeholder, setMovies }: SearchInputProps) => {
