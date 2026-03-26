@@ -18,22 +18,31 @@ const Rating = ({
   const amountOfStars = Array.from({ length: 10 })
 
   return (
-    <div className="p-10! bg-[#343a40] rounded-lg ">
-      {amountOfStars.map((_, index) => {
-        const starValue = index + 1
+    <div className="rating-box">
+      <div className="flex items-center justify-center gap-1 flex-wrap">
+        {amountOfStars.map((_, index) => {
+          const starValue = index + 1
+          const active = starValue <= (hover || rating)
 
-        return (
-          <span
-            key={index}
-            onMouseEnter={() => setHover(starValue)}
-            onMouseLeave={() => setHover(0)}
-            onClick={() => setRating(starValue)}
-            className={`text-5xl cursor-pointer ${starValue <= (hover || rating) ? 'text-yellow-500' : 'text-white'}`}
-          >
-            {starValue <= (hover || rating) ? '★' : '☆'}
-          </span>
-        )
-      })}
+          return (
+            <span
+              key={index}
+              onMouseEnter={() => setHover(starValue)}
+              onMouseLeave={() => setHover(0)}
+              onClick={() => setRating(starValue)}
+              className={`star ${active ? 'star-active' : ''}`}
+            >
+              &#9733;
+            </span>
+          )
+        })}
+      </div>
+
+      {rating > 0 && (
+        <p className="mt-5 text-center text-[1.3rem] font-medium text-text-muted">
+          Your rating: <span className="text-accent-light">{rating}</span>/10
+        </p>
+      )}
 
       {children}
     </div>

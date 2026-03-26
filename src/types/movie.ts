@@ -1,17 +1,13 @@
 export type Movie = {
-  '#TITLE': string
-  '#YEAR': number
-  '#IMDB_ID': string
-  '#RANK': number
-  '#ACTORS': string
-  '#AKA': string
-  '#IMDB_URL': string
-  '#IMDB_IV': string
-  '#IMG_POSTER': string
-  photo_width: number
-  photo_height: number
+  imdbID: string
+  Title: string
+  Year: string
+  Poster: string
+  Type: string
+  imdbRating?: string
+  Actors?: string
+  Runtime?: string
+  rating?: number
 }
-
-export type movie = Movie
 
 export type SelectedMovie = Movie | null

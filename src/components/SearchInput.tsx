@@ -12,12 +12,15 @@ const SearchInput = ({ placeholder, setMovies }: SearchInputProps) => {
   const [query, setQuery] = useState<string>('')
 
   useEffect(() => {
-    if (!query) return
+    if (!query) {
+      setMovies([])
+      return
+    }
 
     const timeout = setTimeout(async () => {
       try {
-        const res = await searchMovies(query)
-        setMovies(res.description ?? [])
+        const results = await searchMovies(query)
+        setMovies(results)
       } catch (error) {
         console.log('Failed to fetch movies', error)
       }

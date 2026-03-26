@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "ui-craft": {
+      "source": "educlopez/ui-craft",
+      "sourceType": "github",
+      "computedHash": "21a14e4bd8c2741f746dd630f588b00dd8b6bd93ea3d58b09c3657a0f5b6d86a"
+    }
+  }
+}

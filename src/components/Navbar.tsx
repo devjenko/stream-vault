@@ -14,18 +14,18 @@ const Navbar = ({ movies, setMovies }: NavbarProps) => {
       <div className="logo">
         <span role="img">
           <a href="/">
-            {' '}
             <img
+              className="rounded-sm"
               src="/icon/stream-vault-icon.png"
               alt="Stream Vault icon"
-              width={50}
-              height={50}
+              width={32}
+              height={32}
             />
           </a>
         </span>
         <h1>Stream Vault</h1>
       </div>
-      <SearchInput placeholder="Search for movies..." setMovies={setMovies} />
+      <SearchInput placeholder="Search movies..." setMovies={setMovies} />
       <SearchResults results={movies.length} />
     </nav>
   )

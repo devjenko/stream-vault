@@ -18,16 +18,15 @@ const ListBox = ({
   const [isOpen1, setIsOpen1] = useState(true)
   return (
     <div className="box no-scrollbar">
-      {' '}
       <ToggleButton isOpen={isOpen1} setIsOpen={setIsOpen1} />
       {isOpen1 && (
-        <ul className="list no-scrollbar">
+        <ul className="list list-movies no-scrollbar">
           {movies.map((movie) => (
             <MovieCard
               setOpenWatchedBox={setOpenWatchedBox}
               setSelectedMovieCard={setSelectedMovieCard}
               movie={movie}
-              key={movie['#IMDB_ID']}
+              key={movie.imdbID}
             />
           ))}
         </ul>

@@ -18,18 +18,19 @@ const MovieCard = ({
   }
 
   return (
-    <li key={movie['#TITLE']} className="cursor-pointer" onClick={handleClick}>
+    <li className="cursor-pointer" onClick={handleClick}>
       <img
-        src={movie['#IMG_POSTER']}
-        alt={`${movie['#TITLE']} poster`}
+        className="rounded-sm"
+        src={movie.Poster !== 'N/A' ? movie.Poster : '/icon/stream-vault-icon.png'}
+        alt={`${movie.Title} poster`}
         width={100}
         height={100}
       />
-      <h3>{movie['#TITLE']}</h3>
+      <h3>{movie.Title}</h3>
       <div>
         <p>
-          <span>🗓</span>
-          <span>{movie['#YEAR']}</span>
+          <span className="text-[1.1rem]">&#9733;</span>
+          <span>{movie.Year}</span>
         </p>
       </div>
     </li>

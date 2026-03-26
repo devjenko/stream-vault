@@ -6,19 +6,36 @@ const MovieCardInfo = ({
   selectedMovieCard: Movie
 }) => {
   return (
-    <div className="flex">
+    <div className="flex border-b border-white/5">
       <img
-        className="object-cover"
-        width={134}
-        height={134}
-        src={selectedMovieCard['#IMG_POSTER']}
-        alt={selectedMovieCard['#TITLE']}
+        className="rounded-none object-cover"
+        width={140}
+        height={140}
+        src={
+          selectedMovieCard.Poster !== 'N/A'
+            ? selectedMovieCard.Poster
+            : '/icon/stream-vault-icon.png'
+        }
+        alt={selectedMovieCard.Title}
       />
-      <div className="py-10! px-14! flex flex-col gap-10 text-xl">
-        <h1 className="text-4xl font-bold">{selectedMovieCard['#TITLE']}</h1>
-        <p>{selectedMovieCard['#YEAR']}</p>
-        <p>{selectedMovieCard['#ACTORS']}</p>
-        <span>⭐️ {selectedMovieCard['#RANK']} IMDb rating</span>
+      <div className="flex flex-col justify-center gap-3 px-[2.4rem] py-8">
+        <h1 className="text-[2rem] font-semibold leading-tight -tracking-wide text-white">
+          {selectedMovieCard.Title}
+        </h1>
+        <p className="text-[1.3rem] text-text-muted">
+          {selectedMovieCard.Year}
+        </p>
+        {selectedMovieCard.Actors && (
+          <p className="text-[1.2rem] leading-snug text-text-dim">
+            {selectedMovieCard.Actors}
+          </p>
+        )}
+        {selectedMovieCard.imdbRating && (
+          <span className="flex items-center gap-2 text-[1.2rem] text-accent-light">
+            <span className="text-[1.1rem]">&#9733;</span>
+            {selectedMovieCard.imdbRating} IMDb
+          </span>
+        )}
       </div>
     </div>
   )

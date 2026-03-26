@@ -16,6 +16,7 @@ const Main = ({ movies }: { movies: Movie[] }) => {
       <WatchedBox
         selectedMovieCard={selectedMovieCard}
         openWatchedBox={openWatchedBox}
+        setOpenWatchedBox={setOpenWatchedBox}
       />
     </main>
   )
