@@ -1,23 +1,10 @@
-import ListBox from './ListBox'
-import WatchedBox from './WatchedBox'
-import type { Movie } from '../types/movie'
-import { useState } from 'react'
 
-const Main = ({ movies }: { movies: Movie[] }) => {
-  const [openWatchedBox, setOpenWatchedBox] = useState(false)
-  const [selectedMovieCard, setSelectedMovieCard] = useState<Movie | null>(null)
+
+const Main = ({children}:{children:React.ReactNode}) => {
+
   return (
     <main className="main">
-      <ListBox
-        setSelectedMovieCard={setSelectedMovieCard}
-        setOpenWatchedBox={setOpenWatchedBox}
-        movies={movies}
-      />
-      <WatchedBox
-        selectedMovieCard={selectedMovieCard}
-        openWatchedBox={openWatchedBox}
-        setOpenWatchedBox={setOpenWatchedBox}
-      />
+      {children}
     </main>
   )
 }

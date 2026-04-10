@@ -26,7 +26,7 @@ const SearchInput = ({ placeholder, setMovies }: SearchInputProps) => {
       }
     }, 500)
     return () => clearTimeout(timeout)
-  }, [query])
+  }, [query, setMovies])
 
   return (
     <input

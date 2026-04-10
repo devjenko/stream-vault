@@ -1,20 +1,13 @@
-import { type SetStateAction } from 'react'
+import { useState } from 'react'
 
 interface RatingProps {
-  hover: number
-  setHover: React.Dispatch<SetStateAction<number>>
   rating: number
-  setRating: React.Dispatch<SetStateAction<number>>
-  children: React.ReactNode
+  onRate: (value: number) => void
+  children?: React.ReactNode
 }
 
-const Rating = ({
-  hover,
-  rating,
-  setHover,
-  setRating,
-  children,
-}: RatingProps) => {
+const Rating = ({ rating, onRate, children }: RatingProps) => {
+  const [hover, setHover] = useState(0)
   const amountOfStars = Array.from({ length: 10 })
 
   return (
@@ -29,7 +22,7 @@ const Rating = ({
               key={index}
               onMouseEnter={() => setHover(starValue)}
               onMouseLeave={() => setHover(0)}
-              onClick={() => setRating(starValue)}
+              onClick={() => onRate(starValue)}
               className={`star ${active ? 'star-active' : ''}`}
             >
               &#9733;
@@ -44,7 +37,7 @@ const Rating = ({
         </p>
       )}
 
-      {children}
+      {rating > 0 ? children : null}
     </div>
   )
 }
