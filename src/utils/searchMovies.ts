@@ -1,8 +1,9 @@
 import type { Movie } from '../types/movie'
 
-const API_KEY = 'e59a8a89'
+const API_KEY = import.meta.env.VITE_API_KEY
 
 export async function searchMovies(query: string): Promise<Movie[]> {
+
   const res = await fetch(
     `https://www.omdbapi.com/?apikey=${API_KEY}&s=${encodeURIComponent(query)}`
   )
