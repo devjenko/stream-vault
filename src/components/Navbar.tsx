@@ -1,14 +1,10 @@
-import SearchInput from './SearchInput'
-import SearchResults from './SearchResults'
-import type { Movie } from '../types/movie'
-import type { StateSetter } from '../types/state'
+import React from 'react'
 
 interface NavbarProps {
-  movies: Movie[]
-  setMovies: StateSetter<Movie[]>
+  children: React.ReactNode
 }
 
-const Navbar = ({ movies, setMovies }: NavbarProps) => {
+const Navbar = ({ children }: NavbarProps) => {
   return (
     <nav className="nav-bar">
       <div className="logo">
@@ -25,8 +21,7 @@ const Navbar = ({ movies, setMovies }: NavbarProps) => {
         </span>
         <h1>Stream Vault</h1>
       </div>
-      <SearchInput placeholder="Search movies..." setMovies={setMovies} />
-      <SearchResults results={movies.length} />
+      {children}
     </nav>
   )
 }
