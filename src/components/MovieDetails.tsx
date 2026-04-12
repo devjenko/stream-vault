@@ -1,9 +1,16 @@
+import type { Movie } from '../types/movie'
+
 interface MovieDetailsProps {
   type: string
   imdbID: string
+  selectedMovieCard: Movie
 }
 
-const MovieDetails = ({ type, imdbID }: MovieDetailsProps) => {
+const MovieDetails = ({
+  type,
+  imdbID,
+  selectedMovieCard,
+}: MovieDetailsProps) => {
   const details = [
     { name: 'Movie Type', value: type },
     { name: 'Movie IMDB ID', value: imdbID },
@@ -22,6 +29,14 @@ const MovieDetails = ({ type, imdbID }: MovieDetailsProps) => {
           </span>
         </div>
       ))}
+      <div className="text-xl text-green-400 mt-6! px-4! ">
+        <a
+          target="_blank"
+          href={`https://www.youtube.com/results?search_query=${selectedMovieCard.Title}`}
+        >
+          Watch Trailer
+        </a>
+      </div>
     </>
   )
 }

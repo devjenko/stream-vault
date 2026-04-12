@@ -136,6 +136,7 @@ export default function App() {
                 <MovieDetails
                   type={selectedMovieCard.Type}
                   imdbID={selectedMovieCard.imdbID}
+                  selectedMovieCard={selectedMovieCard}
                 />
               </div>
             </>
