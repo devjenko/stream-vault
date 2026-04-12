@@ -12,6 +12,7 @@ import MovieCardInfo from './components/MovieCardInfo'
 import SummaryCard from './components/SummaryCard'
 import Rating from './components/Rating'
 import AddToListButton from './components/AddToListButton'
+import MovieDetails from './components/MovieDetails'
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([])
@@ -128,10 +129,14 @@ export default function App() {
           {openDetails && selectedMovieCard ? (
             <>
               <MovieCardInfo selectedMovieCard={selectedMovieCard} />
-              <div className="p-8">
+              <div className="p-8 ">
                 <Rating rating={rating} onRate={setRating}>
                   <AddToListButton onClick={handleAddToList} />
                 </Rating>
+                <MovieDetails
+                  type={selectedMovieCard.Type}
+                  imdbID={selectedMovieCard.imdbID}
+                />
               </div>
             </>
           ) : (
@@ -144,7 +149,7 @@ export default function App() {
 
               <ul className="list no-scrollbar">
                 {watched.map((movie) => (
-                  <li key={movie.imdbID}>
+                  <li key={movie.Title}>
                     <img
                       className="rounded-sm"
                       src={

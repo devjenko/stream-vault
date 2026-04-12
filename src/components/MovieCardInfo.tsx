@@ -1,12 +1,8 @@
 import type { Movie } from '../types/movie'
 
-const MovieCardInfo = ({
-  selectedMovieCard,
-}: {
-  selectedMovieCard: Movie
-}) => {
+const MovieCardInfo = ({ selectedMovieCard }: { selectedMovieCard: Movie }) => {
   return (
-    <div className="flex border-b border-white/5">
+    <div className="flex gap-6 border-b border-white/5">
       <img
         className="rounded-none object-cover"
         width={140}
@@ -18,13 +14,15 @@ const MovieCardInfo = ({
         }
         alt={selectedMovieCard.Title}
       />
-      <div className="flex flex-col justify-center gap-3 px-[2.4rem] py-8">
+      <div className="flex flex-col justify-center gap-3 w-full">
         <h1 className="text-[2rem] font-semibold leading-tight -tracking-wide text-white">
           {selectedMovieCard.Title}
         </h1>
+
         <p className="text-[1.3rem] text-text-muted">
           {selectedMovieCard.Year}
         </p>
+
         {selectedMovieCard.Actors && (
           <p className="text-[1.2rem] leading-snug text-text-dim">
             {selectedMovieCard.Actors}
