@@ -22,6 +22,8 @@ export default function App() {
   const [watched, setWatched] = useState<Movie[]>(() => {
     if (typeof localStorage === 'undefined') return []
 
+   
+
     const stored = localStorage.getItem('watched')
     if (!stored) return []
 
@@ -37,8 +39,8 @@ export default function App() {
     type: 'success' | 'error'
   } | null>(null)
 
-  const handleRemoveMovie = (imdbID: string) => {
-    setWatched((prev) => prev.filter((m) => m.imdbID !== imdbID))
+  const handleRemoveMovie = (id:number) => {
+    setWatched((prev) => prev.filter((m) => m.id !== id))
   }
 
   useEffect(() => {
@@ -59,20 +61,21 @@ export default function App() {
     }
 
     const alreadyAdded = watched.some(
-      (m) => m.imdbID === selectedMovieCard.imdbID
+      (m) => m.id === selectedMovieCard.id
     )
     if (alreadyAdded) {
       setToast({
-        message: `${selectedMovieCard.Title} is already in your list.`,
+        message: `${selectedMovieCard.title} is already in your list.`,
         type: 'error',
       })
       return
     }
+     
 
     const newWatchedMovie = { ...selectedMovieCard, rating }
     setWatched((prev) => [...prev, newWatchedMovie])
     setToast({
-      message: `Added ${selectedMovieCard.Title} to your list`,
+      message: `Added ${selectedMovieCard.title} to your list`,
       type: 'success',
     })
     setRating(0)
@@ -81,10 +84,7 @@ export default function App() {
   const averageImdb =
     watched.length > 0
       ? (
-          watched.reduce(
-            (sum, movie) => sum + (parseFloat(movie.imdbRating ?? '0') || 0),
-            0
-          ) / watched.length
+       watched.reduce((sum, movie) => sum + (movie.vote_average ?? 0), 0)
         ).toFixed(1)
       : '0.0'
 
@@ -95,6 +95,8 @@ export default function App() {
           watched.length
         ).toFixed(1)
       : '0.0'
+
+      
 
   return (
     <>
@@ -119,7 +121,7 @@ export default function App() {
                 setOpenWatchedBox={setOpenDetails}
                 setSelectedMovieCard={setSelectedMovieCard}
                 movie={movie}
-                key={movie.imdbID}
+                key={movie.id}
               />
             ))}
           </ul>
@@ -134,8 +136,6 @@ export default function App() {
                   <AddToListButton onClick={handleAddToList} />
                 </Rating>
                 <MovieDetails
-                  type={selectedMovieCard.Type}
-                  imdbID={selectedMovieCard.imdbID}
                   selectedMovieCard={selectedMovieCard}
                 />
               </div>
@@ -150,23 +150,23 @@ export default function App() {
 
               <ul className="list no-scrollbar">
                 {watched.map((movie) => (
-                  <li key={movie.Title}>
+                  <li key={movie.title}>
                     <img
                       className="rounded-sm"
                       src={
-                        movie.Poster !== 'N/A'
-                          ? movie.Poster
-                          : '/icon/stream-vault-icon.png'
+                        !`https://image.tmdb.org/t/p/w500/${movie.poster_path}` ? 'N/A'
+                          : `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                      
                       }
-                      alt={`${movie.Title} poster`}
+                      alt={`${movie.title} poster`}
                     />
-                    <h3>{movie.Title}</h3>
+                    <h3>{movie.title}</h3>
                     <div>
                       <p>
                         <span className="text-[1.1rem] text-accent-light">
                           &#9733;
                         </span>
-                        <span>{movie.imdbRating ?? 'N/A'}</span>
+                        <span>{!movie.vote_average ? 'N/A' : movie.vote_average}</span>
                       </p>
                       <p>
                         <span className="text-[1.1rem] text-primary-light">
@@ -177,7 +177,7 @@ export default function App() {
                     </div>
                     <div
                       className="btn-remove"
-                      onClick={() => handleRemoveMovie(movie.imdbID)}
+                      onClick={() => handleRemoveMovie(movie.id)}
                     >
                       &#x2715;
                     </div>
