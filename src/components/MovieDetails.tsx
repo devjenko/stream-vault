@@ -32,7 +32,7 @@ const MovieDetails = ({
       <div className="text-xl text-green-400 mt-6! px-4! ">
         <a
           target="_blank"
-          href={`https://www.youtube.com/results?search_query=${selectedMovieCard.Title}`}
+          href={`https://www.youtube.com/results?search_query=${selectedMovieCard.Title} trailer`}
         >
           Watch Trailer
         </a>
