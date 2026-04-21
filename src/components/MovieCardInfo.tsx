@@ -4,7 +4,7 @@ const MovieCardInfo = ({ selectedMovieCard }: { selectedMovieCard: Movie }) => {
 
  
   
-   const selectedMoviePosterPath = `https://image.tmdb.org/t/p/w500/${selectedMovieCard.poster_path}`
+  
 
   return (
     <div className="flex gap-6 border-b border-white/5">
@@ -13,8 +13,7 @@ const MovieCardInfo = ({ selectedMovieCard }: { selectedMovieCard: Movie }) => {
         width={140}
         height={140}
         src={
-           !selectedMoviePosterPath ? '/icon/stream-vault-icon.png'
-            : selectedMoviePosterPath
+         selectedMovieCard.poster_path ? `https://image.tmdb.org/t/p/w500${selectedMovieCard.poster_path}` : '/icon/stream-vault-icon.png'
         }
         alt={selectedMovieCard.title}
       />
