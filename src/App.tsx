@@ -19,6 +19,7 @@ export default function App() {
   const [openMovieList, setOpenMovieList] = useState(true)
   const [openDetails, setOpenDetails] = useState(true)
   const [selectedMovieCard, setSelectedMovieCard] = useState<Movie | null>(null)
+   const [trailerKey, setTrailerKey] = useState<string | null>(null)
   const [watched, setWatched] = useState<Movie[]>(() => {
     if (typeof localStorage === 'undefined') return []
 
@@ -122,6 +123,7 @@ export default function App() {
                 setSelectedMovieCard={setSelectedMovieCard}
                 movie={movie}
                 key={movie.id}
+                setTrailerKey={setTrailerKey}
               />
             ))}
           </ul>
@@ -137,6 +139,7 @@ export default function App() {
                 </Rating>
                 <MovieDetails
                   selectedMovieCard={selectedMovieCard}
+                  trailerKey={trailerKey}
                 />
               </div>
             </>

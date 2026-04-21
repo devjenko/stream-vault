@@ -1,22 +1,30 @@
 import type { Movie, SelectedMovie } from '../types/movie'
 import type { StateSetter } from '../types/state'
+import { fetchMovieTrailer } from "../utils/searchMovies"
+
 
 interface MovieCardProps {
   setOpenWatchedBox: StateSetter<boolean>
   setSelectedMovieCard: StateSetter<SelectedMovie>
   movie: Movie
+  setTrailerKey:StateSetter<string | null>
 }
 
 const MovieCard = ({
   setOpenWatchedBox,
   setSelectedMovieCard,
   movie,
+  setTrailerKey,
 }: MovieCardProps) => {
 
+ 
 
-  const handleClick = () => {
+
+  const handleClick = async () => {
     setOpenWatchedBox(true)
     setSelectedMovieCard(movie)
+   const key = await fetchMovieTrailer(movie.id)
+   setTrailerKey(key)
     
   }
 

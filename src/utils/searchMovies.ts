@@ -21,17 +21,20 @@ export async function searchMovies(query: string): Promise<Movie[]> {
   return data.results 
 }
 
-export async function fetchMovieDetails(imdbID: string): Promise<Movie | null> {
-  const res = await fetch(
-    `https://api.themoviedb.org/3/movie/${imdbID}`,{
-     headers: {
-    'Authorization': `Bearer ${API_KEY}`
-  }}
-  )
+export async function fetchMovieTrailer (movieId:number): Promise<string | null> {
 
-  const data = await res.json()
+  const res = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos`, {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    })
 
-  if (!data.id ) return null
+    const data = await res.json()
 
-  return data
+    const trailer = data.results?.find((v: { site: string; type: string; key: string }) => v.site === 'YouTube' && v.type === 'Trailer')
+
+    return trailer?.key ?? null
+  
+
 }
+
