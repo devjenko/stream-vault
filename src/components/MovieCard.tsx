@@ -20,13 +20,13 @@ const MovieCard = ({
     
   }
 
-  const moviePosterPath = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+
 
   return (
     <li className="cursor-pointer" onClick={handleClick}>
       <img
         className="rounded-sm"
-        src={!moviePosterPath ? '/icon/stream-vault-icon.png' : moviePosterPath  }
+        src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '/icon/stream-vault-icon.png' }
         alt={`${movie.title} poster`}
         width={100}
         height={100}
