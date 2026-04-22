@@ -117,21 +117,31 @@ export default function App() {
       )}
 
       <Main>
-        <Box openBox={openMovieList} setOpenBox={setOpenMovieList}>
-          <ul className="list list-movies no-scrollbar">
-            {movies.map((movie) => (
-              <MovieCard
-                setShowMovieDetails={setShowMovieDetails}
-                setSelectedMovieCard={setSelectedMovieCard}
-                movie={movie}
-                key={movie.id}
-                setTrailerKey={setTrailerKey}
-              />
-            ))}
-          </ul>
-        </Box>
+        {movies && (
+          <Box
+            className="min-h-[88vh]"
+            openBox={openMovieList}
+            setOpenBox={setOpenMovieList}
+          >
+            <ul className="list list-movies no-scrollbar">
+              {movies.map((movie) => (
+                <MovieCard
+                  setShowMovieDetails={setShowMovieDetails}
+                  setSelectedMovieCard={setSelectedMovieCard}
+                  movie={movie}
+                  key={movie.id}
+                  setTrailerKey={setTrailerKey}
+                />
+              ))}
+            </ul>
+          </Box>
+        )}
 
-        <Box openBox={openDetails} setOpenBox={setOpenDetails}>
+        <Box
+          className="md:sticky! md:top-[8.4rem]!"
+          openBox={openDetails}
+          setOpenBox={setOpenDetails}
+        >
           <ToggleButton isOpen={showMovieDetails} onToggle={handleToggle} />
 
           {showMovieDetails && selectedMovieCard ? (

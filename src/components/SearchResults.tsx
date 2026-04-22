@@ -4,7 +4,7 @@ interface SearchResultsProps {
 
 const SearchResults = ({ results }: SearchResultsProps) => {
   return (
-    <p className="num-results">
+    <p className="num-results ">
       Found <strong>{results}</strong> results
     </p>
   )

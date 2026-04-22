@@ -30,7 +30,7 @@ const SearchInput = ({ placeholder, setMovies }: SearchInputProps) => {
 
   return (
     <input
-      className="search"
+      className="search "
       type="text"
       placeholder={placeholder}
       value={query}
