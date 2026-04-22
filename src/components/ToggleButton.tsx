@@ -1,14 +1,12 @@
-import type { SetStateAction } from 'react'
-
 interface ToggleButtonProps {
   isOpen: boolean
-  setIsOpen: React.Dispatch<SetStateAction<boolean>>
+  onToggle: () => void
 }
 
-const ToggleButton = ({ isOpen, setIsOpen }: ToggleButtonProps) => {
+const ToggleButton = ({ isOpen, onToggle }: ToggleButtonProps) => {
   return (
-    <button className="btn-toggle" onClick={() => setIsOpen((open) => !open)}>
-      {isOpen ? '–' : '+'}
+    <button className="btn-toggle" onClick={onToggle}>
+      {isOpen ? '+' : '-'}
     </button>
   )
 }

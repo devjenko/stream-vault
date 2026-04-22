@@ -13,17 +13,18 @@ import SummaryCard from './components/SummaryCard'
 import Rating from './components/Rating'
 import AddToListButton from './components/AddToListButton'
 import MovieDetails from './components/MovieDetails'
+import ToggleButton from './components/ToggleButton'
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>([])
   const [openMovieList, setOpenMovieList] = useState(true)
   const [openDetails, setOpenDetails] = useState(true)
   const [selectedMovieCard, setSelectedMovieCard] = useState<Movie | null>(null)
-   const [trailerKey, setTrailerKey] = useState<string | null>(null)
+  const [trailerKey, setTrailerKey] = useState<string | null>(null)
+  const [showMovieDetails, setShowMovieDetails] = useState(false)
+
   const [watched, setWatched] = useState<Movie[]>(() => {
     if (typeof localStorage === 'undefined') return []
-
-   
 
     const stored = localStorage.getItem('watched')
     if (!stored) return []
@@ -34,13 +35,14 @@ export default function App() {
       return []
     }
   })
+
   const [rating, setRating] = useState(0)
   const [toast, setToast] = useState<{
     message: string
     type: 'success' | 'error'
   } | null>(null)
 
-  const handleRemoveMovie = (id:number) => {
+  const handleRemoveMovie = (id: number) => {
     setWatched((prev) => prev.filter((m) => m.id !== id))
   }
 
@@ -61,9 +63,7 @@ export default function App() {
       return
     }
 
-    const alreadyAdded = watched.some(
-      (m) => m.id === selectedMovieCard.id
-    )
+    const alreadyAdded = watched.some((m) => m.id === selectedMovieCard.id)
     if (alreadyAdded) {
       setToast({
         message: `${selectedMovieCard.title} is already in your list.`,
@@ -71,7 +71,6 @@ export default function App() {
       })
       return
     }
-     
 
     const newWatchedMovie = { ...selectedMovieCard, rating }
     setWatched((prev) => [...prev, newWatchedMovie])
@@ -80,13 +79,14 @@ export default function App() {
       type: 'success',
     })
     setRating(0)
+    setShowMovieDetails(false)
   }
 
   const averageImdb =
     watched.length > 0
-      ? (
-       watched.reduce((sum, movie) => sum + (movie.vote_average ?? 0), 0)
-        ).toFixed(1)
+      ? watched
+          .reduce((sum, movie) => sum + (movie.vote_average ?? 0), 0)
+          .toFixed(1)
       : '0.0'
 
   const averageUserRating =
@@ -97,7 +97,9 @@ export default function App() {
         ).toFixed(1)
       : '0.0'
 
-      
+  const handleToggle = () => {
+    setShowMovieDetails((prev) => !prev)
+  }
 
   return (
     <>
@@ -119,7 +121,7 @@ export default function App() {
           <ul className="list list-movies no-scrollbar">
             {movies.map((movie) => (
               <MovieCard
-                setOpenWatchedBox={setOpenDetails}
+                setShowMovieDetails={setShowMovieDetails}
                 setSelectedMovieCard={setSelectedMovieCard}
                 movie={movie}
                 key={movie.id}
@@ -130,7 +132,9 @@ export default function App() {
         </Box>
 
         <Box openBox={openDetails} setOpenBox={setOpenDetails}>
-          {openDetails && selectedMovieCard ? (
+          <ToggleButton isOpen={showMovieDetails} onToggle={handleToggle} />
+
+          {showMovieDetails && selectedMovieCard ? (
             <>
               <MovieCardInfo selectedMovieCard={selectedMovieCard} />
               <div className="p-8 ">
@@ -150,16 +154,15 @@ export default function App() {
                 averageImdbRating={averageImdb}
                 averageUserRating={averageUserRating}
               />
-
               <ul className="list no-scrollbar">
                 {watched.map((movie) => (
-                  <li key={movie.title}>
+                  <li key={movie.id}>
                     <img
                       className="rounded-sm"
                       src={
-                        !`https://image.tmdb.org/t/p/w500/${movie.poster_path}` ? 'N/A'
-                          : `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                      
+                        movie.poster_path
+                          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                          : '/icon/stream-vault-icon.png'
                       }
                       alt={`${movie.title} poster`}
                     />
@@ -169,7 +172,9 @@ export default function App() {
                         <span className="text-[1.1rem] text-accent-light">
                           &#9733;
                         </span>
-                        <span>{!movie.vote_average ? 'N/A' : movie.vote_average}</span>
+                        <span>
+                          {!movie.vote_average ? 'N/A' : movie.vote_average}
+                        </span>
                       </p>
                       <p>
                         <span className="text-[1.1rem] text-primary-light">

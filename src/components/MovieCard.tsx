@@ -1,40 +1,36 @@
 import type { Movie, SelectedMovie } from '../types/movie'
 import type { StateSetter } from '../types/state'
-import { fetchMovieTrailer } from "../utils/searchMovies"
-
+import { fetchMovieTrailer } from '../utils/searchMovies'
 
 interface MovieCardProps {
-  setOpenWatchedBox: StateSetter<boolean>
   setSelectedMovieCard: StateSetter<SelectedMovie>
   movie: Movie
-  setTrailerKey:StateSetter<string | null>
+  setTrailerKey: StateSetter<string | null>
+  setShowMovieDetails: StateSetter<boolean>
 }
 
 const MovieCard = ({
-  setOpenWatchedBox,
   setSelectedMovieCard,
   movie,
   setTrailerKey,
+  setShowMovieDetails,
 }: MovieCardProps) => {
-
- 
-
-
   const handleClick = async () => {
-    setOpenWatchedBox(true)
+    setShowMovieDetails(true)
     setSelectedMovieCard(movie)
-   const key = await fetchMovieTrailer(movie.id)
-   setTrailerKey(key)
-    
+    const key = await fetchMovieTrailer(movie.id)
+    setTrailerKey(key)
   }
-
-
 
   return (
     <li className="cursor-pointer" onClick={handleClick}>
       <img
         className="rounded-sm"
-        src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '/icon/stream-vault-icon.png' }
+        src={
+          movie.poster_path
+            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+            : '/icon/stream-vault-icon.png'
+        }
         alt={`${movie.title} poster`}
         width={100}
         height={100}
