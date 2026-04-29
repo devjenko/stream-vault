@@ -1,6 +1,15 @@
+<div align="center">
+  
 # Stream Vault
 
 Search, rate, and maintain a personal library of movies with Stream Vault, a React web application powered by The Movie Database API.
+
+
+<img  width="800" height="395" alt="ezgif com-optimize (1)" src="https://github.com/user-attachments/assets/4fa340d4-2fc3-4bfb-9e21-6ea7227729e7" />
+
+
+</div>
+<br>
 
 ## Overview
 
